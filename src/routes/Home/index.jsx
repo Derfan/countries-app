@@ -1,28 +1,28 @@
 import { memo, useEffect } from 'react';
 
+import { useEffectOnce } from '../../hooks';
 import { Layout } from '../../components';
 import { Controls, ItemsList } from './components';
-import { useCountriesList } from './hooks';
+import { useCountriesList, useControls } from './hooks';
 
 export const Home = memo(() => {
-    const { data, fetchData, handleSearch, handleFilter } = useCountriesList();
+    const { data, fetchData, applyFilters } = useCountriesList();
+    const { values, changeHandler } = useControls();
 
+    const handleControlValueChange = (name, value) => {
+        changeHandler(name, value);
+    };
+
+    useEffectOnce(() => fetchData({ filters: values }));
     useEffect(() => {
-        fetchData();
-    }, []);
+        applyFilters(values);
+    }, [values, applyFilters]);
 
     return (
         <Layout>
-            <Controls
-                onSearch={handleSearch}
-                onFilter={handleFilter}
-            />
+            <Controls {...values} changeHandler={handleControlValueChange} />
 
-            {data && (
-                <ItemsList
-                    entities={data}
-                />
-            )}
+            {data && <ItemsList entities={data} />}
         </Layout>
     );
 });

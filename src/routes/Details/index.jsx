@@ -76,7 +76,7 @@ export const Details = memo(() => {
 
     useEffect(() => {
         fetchDetails({ countryCode });
-    }, [countryCode]);
+    }, [countryCode, fetchDetails]);
 
     return (
         <Layout>

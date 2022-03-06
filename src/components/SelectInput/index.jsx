@@ -1,16 +1,20 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 export const SelectInput = ({ name, value, options, placeholder, onChange }) => {
-    const [currentValue, setCurrentValue] = useState(value);
     const [isOpen, setIsOpen] = useState(false);
+    const label = useMemo(
+        () => value 
+            ? options.find(option => option.value === value).label
+            : null,
+        [options, value],
+    );
 
     const onLabelClick = (event) => {
         event.preventDefault();
 
         setIsOpen(prevValue => !prevValue);
     };
-    const changeHandler = (name, { label, value }) => {
-        setCurrentValue(value ? label : "");
+    const onOptionClick = (name, value) => {
         onChange(name, value);
         setIsOpen(false);
     }
@@ -21,7 +25,7 @@ export const SelectInput = ({ name, value, options, placeholder, onChange }) => 
                 className="flex items-center cursor-pointer rounded overflow-hidden shadow-md h-14 w-48 px-5 bg-white dark:bg-dmElements transition-shadow hover:shadow-xl"
                 onClick={onLabelClick}
             >
-                {currentValue || <span className="text-emptyInput">{placeholder}</span>}
+                {label || <span className="text-emptyInput">{placeholder}</span>}
             </div>
 
             {isOpen && (
@@ -33,7 +37,7 @@ export const SelectInput = ({ name, value, options, placeholder, onChange }) => 
                         <li
                             key={option.value}
                             className="cursor-pointer px-5 py-1 transition-colors hover:bg-lmElementsHover dark:hover:bg-dmElementsHover"
-                            onClick={() => changeHandler(name, option)}
+                            onClick={() => onOptionClick(name, option.value)}
                         >
                             {option.label}
                         </li>
