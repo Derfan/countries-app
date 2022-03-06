@@ -13,7 +13,7 @@ export const ItemCard = ({ alpha3Code, flag, name, capital, population, region }
             />
 
             <div className="px-5 py-6">
-                <h3 className="text-lg font-extrabold mb-3">{name}</h3>
+                <h2 className="text-lg font-extrabold mb-3">{name}</h2>
 
                 <p className="text-sm">
                     <span className="font-semibold">Population:</span> {formatNumber(population)}

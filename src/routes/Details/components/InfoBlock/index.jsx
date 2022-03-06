@@ -36,7 +36,7 @@ export const InfoBlock = ({
 
     return (
         <section className="flex flex-col flex-1 gap-7">
-            <h1 className="text-3xl font-extrabold">{name}</h1>
+            <h2 className="text-3xl font-extrabold">{name}</h2>
 
             <div className="flex flex-col gap-7 md:flex-row md:justify-between">
                 <List
